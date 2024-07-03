@@ -3,6 +3,7 @@ import { createClient } from 'redis';
 class RedisClient {
   constructor() {
     this.client = createClient();
+    this.isConnected = false;
     this.client.on('error', (err) => {
       console.log(err);
       this.isConnected = false;
@@ -36,7 +37,7 @@ class RedisClient {
 
   async del(key) {
     try {
-      await this.client.del(key);
+      this.client.del(key);
     } catch (err) {
       console.log(err);
     }
